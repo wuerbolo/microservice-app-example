@@ -9,6 +9,7 @@ import (
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
+	"go.elastic.co/apm/module/apmecho"
 	"github.com/labstack/echo/middleware"
 	gommonlog "github.com/labstack/gommon/log"
 )
@@ -43,6 +44,7 @@ func main() {
 	}
 
 	e := echo.New()
+	e.Use(apmecho.Middleware())
 	e.Logger.SetLevel(gommonlog.INFO)
 
 	if zipkinURL := os.Getenv("ZIPKIN_URL"); len(zipkinURL) != 0 {

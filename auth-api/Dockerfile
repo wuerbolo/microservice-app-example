@@ -1,5 +1,7 @@
 FROM golang:1.9-alpine
 
+ENV ELASTIC_APM_SERVER_URL http://192.168.1.75:8200
+
 EXPOSE 8081
 
 WORKDIR /go/src/app
