@@ -11,4 +11,4 @@ RUN ./mvnw dependency:resolve
 COPY . .
 RUN ./mvnw install
 
-CMD ["java", "-jar", "./target/users-api-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-javaagent:./elastic-apm-agent-1.4.0.jar",  "-Delastic.apm.service_name=usersapi", "-Delastic.apm.application_packages=com.elgris.usersapi", "-Delastic.apm.server_urls=http://192.168.1.75:8200", "-jar", "./target/users-api-0.0.1-SNAPSHOT.jar"]
