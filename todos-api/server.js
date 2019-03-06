@@ -8,7 +8,7 @@ const apm = require('elastic-apm-node').start({
   secretToken: '',
 
   // Set custom APM Server URL (default: http://localhost:8200)
-  serverUrl: 'http://192.168.1.75:8200',
+  serverUrl: 'https://0918e23ed6fa4b729f3f2fad78814e99.apm.europe-west1.gcp.cloud.es.io:443',
 })
 
 'use strict';
