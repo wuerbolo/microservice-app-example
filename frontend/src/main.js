@@ -21,7 +21,8 @@ const apm = initApm({
   // Set custom APM Server URL (default: http://localhost:8200)
   serverUrl: 'https://0918e23ed6fa4b729f3f2fad78814e99.apm.europe-west1.gcp.cloud.es.io:443',
   // Set service version (required for sourcemap feature)
-  serviceVersion: ''
+  serviceVersion: '',
+  distributedTracingOrigins: ['http://127.0.0.1:8080']
 })
 
 apm.setInitialPageLoadName('frontend')
