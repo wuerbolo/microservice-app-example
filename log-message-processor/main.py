@@ -12,7 +12,6 @@ from elasticapm import Client
 
 client = Client({'SERVICE_NAME': 'python'})
 
-client.begin_transaction('logger')
 
 @elasticapm.capture_span()
 def log_message(message):
@@ -60,9 +59,10 @@ if __name__ == '__main__':
                 transport_handler=http_transport,
                 sample_rate=100
             ):
+                client.begin_transaction('logger')
                 log_message(message)
+                client.end_transaction('logger')
         except Exception as e:
             print('did not send data to Zipkin: {}'.format(e))
             log_message(message)
 
-        client.end_transaction('logger')
