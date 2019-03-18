@@ -1,3 +1,5 @@
+'use strict';
+
 // Add this to the VERY top of the first file loaded in your app
 const apm = require('elastic-apm-node').start({
   // Override service name from package.json
@@ -5,13 +7,12 @@ const apm = require('elastic-apm-node').start({
   serviceName: 'todos',
 
   // Use if APM Server requires a token
-  secretToken: '',
+  secretToken: process.env.ELASTIC_APM_SECRET_TOKEN,
 
   // Set custom APM Server URL (default: http://localhost:8200)
-  serverUrl: '',
+  serverUrl: process.env.ELASTIC_APM_SERVER_URL,
 })
 
-'use strict';
 const express = require('express')
 const bodyParser = require("body-parser")
 const jwt = require('express-jwt')
