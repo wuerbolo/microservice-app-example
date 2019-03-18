@@ -13,19 +13,6 @@ import App from '@/components/App'
 import router from './router'
 import store from './store'
 
-/* APM agent */
-import { init as initApm } from 'elastic-apm-js-base'
-const apm = initApm({
-  // Set required service name (allowed characters: a-z, A-Z, 0-9, -, _, and space)
-  serviceName: 'frontend',
-  serverUrl: process.env.ELASTIC_APM_SERVER_URL,
-  // Set service version (required for sourcemap feature)
-  serviceVersion: '',
-  distributedTracingOrigins: ['http://127.0.0.1:8080']
-})
-
-apm.setInitialPageLoadName('frontend')
-
 Vue.config.productionTip = false
 
 /* Auth plugin */
@@ -35,6 +22,9 @@ Vue.use(Auth)
 /* Auth plugin */
 import Zipkin from './zipkin'
 Vue.use(Zipkin)
+
+import Apm from './apm'
+Vue.use(Apm)
 
 /* eslint-disable no-new */
 new Vue({
