@@ -5,10 +5,10 @@ const apm = require('elastic-apm-node').start({
   serviceName: 'todos',
 
   // Use if APM Server requires a token
-  secretToken: '',
+  secretToken: process.env.ELASTIC_APM_SECRET_TOKEN,
 
   // Set custom APM Server URL (default: http://localhost:8200)
-  serverUrl: '',
+  serverUrl: process.env.ELASTIC_APM_SERVER_URL,
 })
 
 'use strict';

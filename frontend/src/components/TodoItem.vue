@@ -19,6 +19,17 @@
 <script>
 export default {
   name: 'todo-item',
-  props: ['todo']
+  props: ['todo'],
+  data () {
+    return {
+      span: null
+    }
+  },
+  created () {
+    this.span = this.$apm.startSpan('mount-duration-todo-item', 'custom')
+  },
+  mounted () {
+    this.span && this.span.end()
+  }
 }
 </script>

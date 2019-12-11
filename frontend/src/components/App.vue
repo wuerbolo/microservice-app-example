@@ -6,7 +6,18 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  data () {
+    return {
+      span: null
+    }
+  },
+  created () {
+    this.span = this.$apm.startSpan('mount-duration-app', 'custom')
+  },
+  mounted () {
+    this.span && this.span.end()
+  }
 }
 </script>
 

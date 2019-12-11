@@ -71,16 +71,21 @@ export default {
     return {
       isProcessing: false,
       errorMessage: '',
-      newTask: ''
+      newTask: '',
+      span: null
     }
   },
   created () {
     this.loadTasks()
+    this.span = this.$apm.startSpan('mount-duration-todos', 'custom')
   },
   computed: {
     total () {
       return this.tasks.length
     }
+  },
+  mounted () {
+    this.span && this.span.end()
   },
   methods: {
     loadTasks () {

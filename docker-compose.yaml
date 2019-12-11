@@ -8,8 +8,7 @@ services:
       AUTH_API_ADDRESS: http://auth-api:8081
       TODOS_API_ADDRESS: http://todos-api:8082
       ZIPKIN_URL: http://zipkin:9411/api/v2/spans
-      ELASTIC_APM_SECRET_TOKEN: "${TOKEN}"
-      ELASTIC_APM_SERVER_URL: "${SERVER}"
+      ELASTIC_APM_SERVER_URL: ${SERVER}
     ports:
       - 8080:8080
     depends_on:
