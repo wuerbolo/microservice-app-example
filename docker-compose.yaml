@@ -27,6 +27,8 @@ services:
       ZIPKIN_URL: http://zipkin:9411/api/v2/spans
       ELASTIC_APM_SECRET_TOKEN: "${TOKEN}"
       ELASTIC_APM_SERVER_URL: "${SERVER}"
+      ELASTIC_APM_LOG_FILE: "stdout"
+      ELASTIC_APM_LOG_LEVEL: "debug"
     depends_on:
       - zipkin
       - users-api
@@ -43,6 +45,7 @@ services:
       ZIPKIN_URL: http://zipkin:9411/api/v2/spans
       ELASTIC_APM_SECRET_TOKEN: "${TOKEN}"
       ELASTIC_APM_SERVER_URL: "${SERVER}"
+      ELASTIC_APM_LOG_LEVEL: "debug"
     depends_on:
       - zipkin
       - redis-queue
@@ -56,6 +59,7 @@ services:
      SPRING_ZIPKIN_BASE_URL: http://zipkin:9411
      ELASTIC_APM_SECRET_TOKEN: "${TOKEN}"
      ELASTIC_APM_SERVER_URL: "${SERVER}"
+     ELASTIC_APM_LOG_LEVEL: "DEBUG"
     depends_on:
       - zipkin
      
@@ -69,6 +73,7 @@ services:
       ZIPKIN_URL: http://zipkin:9411/api/v1/spans
       ELASTIC_APM_SECRET_TOKEN: "${TOKEN}"
       ELASTIC_APM_SERVER_URL: "${SERVER}"
+      ELASTIC_APM_DEBUG: "True"
     depends_on:
       - zipkin
       - redis-queue
