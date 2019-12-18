@@ -15,6 +15,7 @@ client = Client({'SERVICE_NAME': 'python'})
 client.begin_transaction('logger')
 
 @elasticapm.capture_span()
+
 def log_message(message):
     time_delay = random.randrange(0, 2000)
     time.sleep(time_delay / 1000)
@@ -25,6 +26,7 @@ if __name__ == '__main__':
     redis_port = int(os.environ['REDIS_PORT'])
     redis_channel = os.environ['REDIS_CHANNEL']
     zipkin_url = os.environ['ZIPKIN_URL'] if 'ZIPKIN_URL' in os.environ else ''
+    @elasticapm.capture_span()
     def http_transport(encoded_span):
         requests.post(
             zipkin_url,

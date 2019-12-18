@@ -9,6 +9,7 @@ import (
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
+        "go.elastic.co/apm"
 	"go.elastic.co/apm/module/apmecho"
 	"github.com/labstack/echo/middleware"
 	gommonlog "github.com/labstack/gommon/log"
@@ -71,6 +72,7 @@ func main() {
 
 	e.POST("/login", getLoginHandler(userService))
 
+
 	// Start server
 	e.Logger.Fatal(e.Start(hostport))
 }
@@ -116,6 +118,8 @@ func getLoginHandler(userService UserService) echo.HandlerFunc {
 			return ErrHttpGenericMessage
 		}
 
+                span, _ := apm.StartSpan(c.Request().Context(), "getlogin", "custom")
+                defer span.End()
 		return c.JSON(http.StatusOK, map[string]string{
 			"accessToken": t,
 		})
