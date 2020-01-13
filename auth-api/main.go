@@ -72,7 +72,6 @@ func main() {
 
 	e.POST("/login", getLoginHandler(userService))
 
-
 	// Start server
 	e.Logger.Fatal(e.Start(hostport))
 }
@@ -84,12 +83,14 @@ type LoginRequest struct {
 
 func getLoginHandler(userService UserService) echo.HandlerFunc {
 	f := func(c echo.Context) error {
+                span, _ := apm.StartSpan(c.Request().Context(), "getlogin", "custom")
 		requestData := LoginRequest{}
 		decoder := json.NewDecoder(c.Request().Body)
 		if err := decoder.Decode(&requestData); err != nil {
 			log.Printf("could not read credentials from POST body: %s", err.Error())
 			return ErrHttpGenericMessage
 		}
+                defer span.End()
 
 		ctx := c.Request().Context()
 		user, err := userService.Login(ctx, requestData.Username, requestData.Password)
@@ -118,8 +119,6 @@ func getLoginHandler(userService UserService) echo.HandlerFunc {
 			return ErrHttpGenericMessage
 		}
 
-                span, _ := apm.StartSpan(c.Request().Context(), "getlogin", "custom")
-                defer span.End()
 		return c.JSON(http.StatusOK, map[string]string{
 			"accessToken": t,
 		})

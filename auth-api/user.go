@@ -8,7 +8,11 @@ import (
 	"net/http"
 
 	jwt "github.com/dgrijalva/jwt-go"
+
+	"go.elastic.co/apm/module/apmhttp"
 )
+
+var tracingClient = apmhttp.WrapClient(http.DefaultClient)
 
 var allowedUserHashes = map[string]interface{}{
 	"admin_admin": nil,
@@ -51,6 +55,7 @@ func (h *UserService) Login(ctx context.Context, username, password string) (Use
 func (h *UserService) getUser(ctx context.Context, username string) (User, error) {
 	var user User
 
+
 	token, err := h.getUserAPIToken(username)
 	if err != nil {
 		return user, err
@@ -59,9 +64,13 @@ func (h *UserService) getUser(ctx context.Context, username string) (User, error
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Add("Authorization", "Bearer "+token)
 
+        resp, err := tracingClient.Do(req.WithContext(ctx))
+
+        defer resp.Body.Close()
+
 	req = req.WithContext(ctx)
 
-	resp, err := h.Client.Do(req)
+	resp, err = h.Client.Do(req)
 	if err != nil {
 		return user, err
 	}
