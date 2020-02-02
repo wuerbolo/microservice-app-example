@@ -65,6 +65,7 @@ class TodoController {
                 opName: opName,
                 username: username,
                 todoId: todoId,
+                spanTransaction: span.transaction, 
             }))
            if (span) span.end()
         })
