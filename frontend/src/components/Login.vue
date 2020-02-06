@@ -100,15 +100,8 @@ export default {
         password: ''
       },
       errorMessage: '',
-      loggingIn: false,
-      span: null
+      loggingIn: false
     }
-  },
-  created () {
-    this.span = this.$apm.startSpan('mount-duration-login', 'custom')
-  },
-  mounted () {
-    this.span && this.span.end()
   }
 }
 </script>

@@ -26,17 +26,7 @@ import Auth from '@/auth'
 
 export default {
   name: 'app-nav',
-  data () {
-    return {
-      span: null
-    }
-  },
-  created () {
-    this.span = this.$apm.startSpan('mount-duration-app-nav', 'custom')
-  },
-  mounted () {
-    this.span && this.span.end()
-  },
+
   methods: {
     logout () {
       Auth.logout()

@@ -28,14 +28,7 @@ export default {
   },
   data () {
     return {
-      span: null
     }
-  },
-  created () {
-    this.span = this.$apm.startSpan('mount-duration-spinner', 'custom')
-  },
-  mounted () {
-    this.span && this.span.end()
   },
   methods: {
   }
