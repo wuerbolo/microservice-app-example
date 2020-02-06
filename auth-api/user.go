@@ -9,10 +9,7 @@ import (
 
 	jwt "github.com/dgrijalva/jwt-go"
 
-	"go.elastic.co/apm/module/apmhttp"
 )
-
-var tClient = apmhttp.WrapClient(http.DefaultClient)
 
 var allowedUserHashes = map[string]interface{}{
 	"admin_admin": nil,
@@ -31,8 +28,9 @@ type HTTPDoer interface {
 	Do(req *http.Request) (*http.Response, error)
 }
 
+
 type UserService struct {
-	Client            HTTPDoer
+        Client 		  HTTPDoer
 	UserAPIAddress    string
 	AllowedUserHashes map[string]interface{}
 }
@@ -67,7 +65,6 @@ func (h *UserService) getUser(ctx context.Context, username string) (User, error
 	req = req.WithContext(ctx)
 
 	resp, err := h.Client.Do(req)
-	resp, err = tClient.Do(req.WithContext(ctx))
         
 
 	if err != nil {

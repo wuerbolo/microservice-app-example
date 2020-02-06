@@ -13,6 +13,7 @@ import (
 	"go.elastic.co/apm/module/apmecho"
 	"github.com/labstack/echo/middleware"
 //	gommonlog "github.com/labstack/gommon/log"
+      "go.elastic.co/apm/module/apmhttp"
 )
 
 var (
@@ -35,7 +36,7 @@ func main() {
 	}
 
 	userService := UserService{
-		Client:         http.DefaultClient,
+		Client:         apmhttp.WrapClient(http.DefaultClient),
 		UserAPIAddress: userAPIAddress,
 		AllowedUserHashes: map[string]interface{}{
 			"admin_admin": nil,
