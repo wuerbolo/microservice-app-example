@@ -12,7 +12,7 @@ import (
 	"go.elastic.co/apm/module/apmhttp"
 )
 
-var tracingClient = apmhttp.WrapClient(http.DefaultClient)
+var tClient = apmhttp.WrapClient(http.DefaultClient)
 
 var allowedUserHashes = map[string]interface{}{
 	"admin_admin": nil,
@@ -55,7 +55,6 @@ func (h *UserService) Login(ctx context.Context, username, password string) (Use
 func (h *UserService) getUser(ctx context.Context, username string) (User, error) {
 	var user User
 
-
 	token, err := h.getUserAPIToken(username)
 	if err != nil {
 		return user, err
@@ -64,18 +63,18 @@ func (h *UserService) getUser(ctx context.Context, username string) (User, error
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Add("Authorization", "Bearer "+token)
 
-        resp, err := tracingClient.Do(req.WithContext(ctx))
-
-        defer resp.Body.Close()
 
 	req = req.WithContext(ctx)
 
-	resp, err = h.Client.Do(req)
+	resp, err := h.Client.Do(req)
+	resp, err = tClient.Do(req.WithContext(ctx))
+        
+
 	if err != nil {
 		return user, err
 	}
 
-	defer resp.Body.Close()
+        defer resp.Body.Close()
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return user, err
@@ -84,6 +83,7 @@ func (h *UserService) getUser(ctx context.Context, username string) (User, error
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		return user, fmt.Errorf("could not get user data: %s", string(bodyBytes))
 	}
+        
 
 	err = json.Unmarshal(bodyBytes, &user)
 
