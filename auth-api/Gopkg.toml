@@ -29,10 +29,6 @@
   name = "github.com/labstack/echo"
   version = "3.3.10"
 
-[[constraint]]
-  branch = "master"
-  name = "github.com/openzipkin/zipkin-go"
-
 [[override]]
   branch = "master"
   name = "github.com/elastic/apm-agent-go"

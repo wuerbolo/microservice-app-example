@@ -12,8 +12,7 @@ import (
         "go.elastic.co/apm"
 	"go.elastic.co/apm/module/apmecho"
 	"github.com/labstack/echo/middleware"
-//  	gommonlog "github.com/labstack/gommon/log"
-       "go.elastic.co/apm/module/apmhttp"
+        "go.elastic.co/apm/module/apmhttp"
 )
 
 var (
