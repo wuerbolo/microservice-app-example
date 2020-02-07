@@ -77,7 +77,7 @@ export default {
   },
   created () {
     this.loadTasks()
-    this.span = this.$apm.startSpan('mount-duration-todos', 'custom')
+    this.span = this.$apm.startSpan('mount-duration-todos', 'external.http')
   },
   computed: {
     total () {

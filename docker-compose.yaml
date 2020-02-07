@@ -12,7 +12,6 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - zipkin
       - auth-api
       - todos-api
       - users-api
@@ -30,7 +29,6 @@ services:
       ELASTIC_APM_LOG_FILE: "stdout"
       ELASTIC_APM_LOG_LEVEL: "debug"
     depends_on:
-      - zipkin
       - users-api
 
   todos-api:
@@ -46,8 +44,9 @@ services:
       ELASTIC_APM_SECRET_TOKEN: "${TOKEN}"
       ELASTIC_APM_SERVER_URL: "${SERVER}"
       ELASTIC_APM_LOG_LEVEL: "debug"
+      DEBUG: todos-api:*
+      DEBUG: express:*
     depends_on:
-      - zipkin
       - redis-queue
 
   users-api:
@@ -60,8 +59,6 @@ services:
      ELASTIC_APM_SECRET_TOKEN: "${TOKEN}"
      ELASTIC_APM_SERVER_URL: "${SERVER}"
      ELASTIC_APM_LOG_LEVEL: "DEBUG"
-    depends_on:
-      - zipkin
      
   log-message-processor:
     build: ./log-message-processor
@@ -75,13 +72,7 @@ services:
       ELASTIC_APM_SERVER_URL: "${SERVER}"
       ELASTIC_APM_DEBUG: "True"
     depends_on:
-      - zipkin
       - redis-queue
   
-  zipkin:
-    image: openzipkin/zipkin
-    ports:
-      - 9411:9411
-
   redis-queue:
     image: redis

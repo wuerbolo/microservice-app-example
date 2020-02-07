@@ -34,10 +34,10 @@ Vue.use(ApmVuePlugin, {
     serviceName: 'frontend',
     serverUrl: ELASTIC_APM_SERVER_URL,
     serviceVersion: '',
-    distributedTracingOrigins: ['http://users-api:8083'],
     logLevel: 'debug'
   }
 })
+
 function requireLoggedIn (to, from, next) {
   if (!Auth.isLoggedIn()) {
     next({
