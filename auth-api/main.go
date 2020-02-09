@@ -94,6 +94,8 @@ func getLoginHandler(userService UserService) echo.HandlerFunc {
                 
 
 		// Set claims
+                span, _ = apm.StartSpan(c.Request().Context(), "generate-send-token", "custom")
+
 		claims := token.Claims.(jwt.MapClaims)
 		claims["username"] = user.Username
 		claims["firstname"] = user.FirstName
@@ -101,7 +103,6 @@ func getLoginHandler(userService UserService) echo.HandlerFunc {
 		claims["role"] = user.Role
 		claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
  
-                span, _ = apm.StartSpan(c.Request().Context(), "get-token", "custom")
 
 		// Generate encoded token and send it as response.
 		t, err := token.SignedString([]byte(jwtSecret))
