@@ -31,9 +31,9 @@ docker-compose up --build
 Then go to http://127.0.0.1:8080 for web UI. [Zipkin](https://zipkin.io) is available on http://127.0.0.1:9411 by default.
 
 Usernames/passwords are defined in `microservice-app-example/auth-api/user.go` as follows:
-*. admin/admin
-*. johnd/foo
-*. janed/ddd
+* admin/admin
+* johnd/foo
+* janed/ddd
 
 ## Contribution
 
