@@ -7,6 +7,8 @@ RUN apk --no-cache add curl git && \
     curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 
 COPY . .
+
+RUN dep ensure 
 RUN dep ensure -update golang.org/x/sys
 
 RUN go build -o auth-api
