@@ -43,4 +43,3 @@ if __name__ == '__main__':
         log_message(message)
 
         client.end_transaction('logger-transaction')
-

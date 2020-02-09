@@ -1,3 +1,5 @@
+'use strict';
+
 // Add this to the VERY top of the first file loaded in your app
 const apm = require('elastic-apm-node').start({
   // Override service name from package.json
@@ -11,7 +13,6 @@ const apm = require('elastic-apm-node').start({
   serverUrl: process.env.ELASTIC_APM_SERVER_URL,
 })
 
-'use strict';
 const express = require('express')
 const bodyParser = require("body-parser")
 const jwt = require('express-jwt')
