@@ -32,7 +32,7 @@ export default {
     }
   },
   created () {
-    this.span = this.$apm.startSpan('mount-duration-spinner', 'custom')
+    this.span = this.$apm.startSpan('component-spinner', 'custom')
   },
   mounted () {
     this.span && this.span.end()

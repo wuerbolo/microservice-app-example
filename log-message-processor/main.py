@@ -38,9 +38,9 @@ if __name__ == '__main__':
         trace_parent1 = spanTransaction['context']['request']['headers']['elastic-apm-traceparent']
         print('trace_parent_log: {}'.format(trace_parent1))
         trace_parent = TraceParent.from_string(trace_parent1)
-        client.begin_transaction("logger", trace_parent=trace_parent)
+        client.begin_transaction("logger-transaction", trace_parent=trace_parent)
 
         log_message(message)
 
-        client.end_transaction('logger')
+        client.end_transaction('logger-transaction')
 

@@ -32,7 +32,7 @@ export default {
     }
   },
   created () {
-    this.span = this.$apm.startSpan('mount-duration-app-nav', 'custom')
+    this.span = this.$apm.startSpan('component-app-nav', 'custom')
   },
   mounted () {
     this.span && this.span.end()

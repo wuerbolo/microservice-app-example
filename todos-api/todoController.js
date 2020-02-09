@@ -20,7 +20,7 @@ class TodoController {
     create (req, res) {
         // TODO: must be transactional and protected for concurrent access, but
         // the purpose of the whole example app it's enough
-        var span = apm.startSpan('creating')
+        var span = apm.startSpan('creating-item')
         const data = this._getTodoData(req.user.username)
         const todo = {
             content: req.body.content,
@@ -40,7 +40,7 @@ class TodoController {
     delete (req, res) {
         const data = this._getTodoData(req.user.username)
         const id = req.params.taskId
-        var span = apm.startSpan('deleting')
+        var span = apm.startSpan('deleting-item')
         delete data.items[id]
         this._setTodoData(req.user.username, data)
         if (span) span.end()
@@ -53,7 +53,7 @@ class TodoController {
     }
 
     _logOperation (opName, username, todoId) {
-            var span = apm.startSpan('logging')
+            var span = apm.startSpan('logging-operation')
             this._redisClient.publish(this._logChannel, JSON.stringify({
                 opName: opName,
                 username: username,
@@ -64,7 +64,7 @@ class TodoController {
     }
 
     _getTodoData (userID) {
-        var span = apm.startSpan('getting')
+        var span = apm.startSpan('getting-items')
         var data = cache.get(userID)
         if (data == null) {
             data = {
@@ -93,7 +93,7 @@ class TodoController {
     }
 
     _setTodoData (userID, data) {
-        var span = apm.startSpan('setting')
+        var span = apm.startSpan('setting-items')
         cache.put(userID, data)
         this._logOperation('SET', userID, data)
         if (span) span.end()

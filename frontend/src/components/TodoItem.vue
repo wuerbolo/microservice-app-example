@@ -26,7 +26,7 @@ export default {
     }
   },
   created () {
-    this.span = this.$apm.startSpan('mount-duration-todo-item', 'custom')
+    this.span = this.$apm.startSpan('component-todo-item', 'custom')
   },
   mounted () {
     this.span && this.span.end()

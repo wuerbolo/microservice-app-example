@@ -105,7 +105,7 @@ export default {
     }
   },
   created () {
-    this.span = this.$apm.startSpan('mount-duration-login', 'custom')
+    this.span = this.$apm.startSpan('component-login', 'custom')
   },
   mounted () {
     this.span && this.span.end()
