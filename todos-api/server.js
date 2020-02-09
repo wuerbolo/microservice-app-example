@@ -4,7 +4,7 @@
 const apm = require('elastic-apm-node').start({
   // Override service name from package.json
   // Allowed characters: a-z, A-Z, 0-9, -, _, and space
-  serviceName: 'todos',
+  serviceName: 'todos-api',
 
   // Use if APM Server requires a token
   secretToken: process.env.ELASTIC_APM_SECRET_TOKEN,
