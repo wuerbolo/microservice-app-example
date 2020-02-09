@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	jwt "github.com/dgrijalva/jwt-go"
+
 )
 
 var allowedUserHashes = map[string]interface{}{
@@ -27,8 +28,9 @@ type HTTPDoer interface {
 	Do(req *http.Request) (*http.Response, error)
 }
 
+
 type UserService struct {
-	Client            HTTPDoer
+        Client 		  HTTPDoer
 	UserAPIAddress    string
 	AllowedUserHashes map[string]interface{}
 }
@@ -59,14 +61,17 @@ func (h *UserService) getUser(ctx context.Context, username string) (User, error
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Add("Authorization", "Bearer "+token)
 
+
 	req = req.WithContext(ctx)
 
 	resp, err := h.Client.Do(req)
+        
+
 	if err != nil {
 		return user, err
 	}
 
-	defer resp.Body.Close()
+        defer resp.Body.Close()
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return user, err
@@ -75,6 +80,7 @@ func (h *UserService) getUser(ctx context.Context, username string) (User, error
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		return user, fmt.Errorf("could not get user data: %s", string(bodyBytes))
 	}
+        
 
 	err = json.Unmarshal(bodyBytes, &user)
 
