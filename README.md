@@ -23,8 +23,8 @@ Take a look at the components diagram that describes them and their interactions
 
 ## Why this fork
 
-Used the Elastic APM to instrument this example app. 
-https://www.elastic.co/guide/en/apm/get-started/current/index.html
+The original project instrumeted the example app using Zipkin. 
+This fork used the [Elastic APM](https://www.elastic.co/guide/en/apm/get-started/current/index.html)
 
 
 ## How to start
