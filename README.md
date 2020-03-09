@@ -15,11 +15,14 @@ The app itself is a simple TODO app that additionally authenticates users. I pla
 5. [Log Message Processor](/log-message-processor) is a very short queue processor written in Python. It's sole purpose is to read messages from Redis queue and print them to stdout
 
 Take a look at the components diagram that describes them and their interactions.
-![microservice-app-example](https://user-images.githubusercontent.com/1905821/34918427-a931d84e-f952-11e7-85a0-ace34a2e8edb.png)
+
+![picture](https://github.com/nephel/microservice-app-example/blob/master/polyglot%20microservices%20app.jpg)
 
 ## Use cases
 
 - Evaluate various instruments (monitoring, tracing, you name it): how easy they integrate, do they have any bugs with different languages, etc.
+
+
 
 ## Why this fork
 
