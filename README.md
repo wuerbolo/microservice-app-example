@@ -24,6 +24,23 @@ This fork used the [Elastic APM](https://www.elastic.co/guide/en/apm/get-started
 
 ## How to start
 
+The demo uses the elastic stack on APM on ESS. If you don’t have an Elasticsearch Service account already, you can [set up a trial one](https://www.elastic.co/guide/en/cloud/current/ec-getting-started-trial.html). It comes with an APM server included as default. 
+
+To get the example application running locally on our local machine and configure to send APM data to the Elasticsearch Service cluster. 
+We need to clone the project i.e. 
+```
+git clone https://github.com/nephel/microservice-app-example.git
+cd microservice-app-example
+```
+Create a file called .env  at the root directory of the project with the contents:`
+`vi .env`
+Adding the token and server URL values for the APM sever, that correspond to our environment.
+```
+TOKEN=XXXX
+SERVER=XXXX
+```
+
+
 Use `docker-compose`:
 
 ```
