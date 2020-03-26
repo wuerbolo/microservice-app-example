@@ -7,12 +7,12 @@ import (
 	"os"
 	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/labstack/echo"
         "go.elastic.co/apm"
 	"go.elastic.co/apm/module/apmecho"
-	"github.com/labstack/echo/middleware"
         "go.elastic.co/apm/module/apmhttp"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
+	jwt "github.com/dgrijalva/jwt-go"
 )
 
 var (
@@ -69,7 +69,7 @@ type LoginRequest struct {
 
 func getLoginHandler(userService UserService) echo.HandlerFunc {
 	f := func(c echo.Context) error {
-                span, _ := apm.StartSpan(c.Request().Context(), "request-login", "custom")
+                span, _ := apm.StartSpan(c.Request().Context(), "request-login", "app")
 		requestData := LoginRequest{}
 		decoder := json.NewDecoder(c.Request().Body)
 		if err := decoder.Decode(&requestData); err != nil {
@@ -78,8 +78,7 @@ func getLoginHandler(userService UserService) echo.HandlerFunc {
 		}
                 span.End()
 
-                span, _ = apm.StartSpan(c.Request().Context(), "login", "custom")
-		ctx := c.Request().Context()
+                span, ctx := apm.StartSpan(c.Request().Context(), "login", "app")
 		user, err := userService.Login(ctx, requestData.Username, requestData.Password)
 		if err != nil {
 			if err != ErrWrongCredentials {
@@ -94,7 +93,7 @@ func getLoginHandler(userService UserService) echo.HandlerFunc {
                 
 
 		// Set claims
-                span, _ = apm.StartSpan(c.Request().Context(), "generate-send-token", "custom")
+                span, _ = apm.StartSpan(c.Request().Context(), "generate-send-token", "app")
 
 		claims := token.Claims.(jwt.MapClaims)
 		claims["username"] = user.Username

@@ -26,8 +26,6 @@ const router = new Router({
 
 const ELASTIC_APM_SERVER_URL = process.env.ELASTIC_APM_SERVER_URL
 
-export default router
-
 Vue.use(ApmVuePlugin, {
   router,
   config: {
@@ -48,3 +46,5 @@ function requireLoggedIn (to, from, next) {
     next()
   }
 }
+
+export default router
