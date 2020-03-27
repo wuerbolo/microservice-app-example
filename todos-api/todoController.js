@@ -27,13 +27,10 @@ class TodoController {
             id: data.lastInsertedID
         }
         data.items[data.lastInsertedID] = todo
-
         data.lastInsertedID++
         this._setTodoData(req.user.username, data)
         if (span) span.end()
-
         this._logOperation(OPERATION_CREATE, req.user.username, todo.id)
-
         res.json(todo)
     }
 
@@ -44,23 +41,28 @@ class TodoController {
         delete data.items[id]
         this._setTodoData(req.user.username, data)
         if (span) span.end()
-
         this._logOperation(OPERATION_DELETE, req.user.username, id)
-
-
         res.status(204)
         res.send()
     }
 
-    _logOperation (opName, username, todoId) {
-            var span = apm.startSpan('logging-operation')
-            this._redisClient.publish(this._logChannel, JSON.stringify({
-                opName: opName,
-                username: username,
-                todoId: todoId,
-                spanTransaction: span.transaction, 
-            }))
-           if (span) span.end()
+    _logOperation(opName, username, todoId) {
+      var span = apm.startSpan('logging-operation')
+      this._redisClient.publish(
+        this._logChannel,
+        JSON.stringify({
+          opName,
+          username,
+          todoId,
+          spanTransaction: span.transaction
+        }),
+        function(err) {
+          if (span) span.end()
+          if (err) {
+            apm.captureError(err)
+          }
+        }
+      )
     }
 
     _getTodoData (userID) {
@@ -84,9 +86,9 @@ class TodoController {
                 },
                 lastInsertedID: 3
             }
-         if (span) span.end()
 
             this._setTodoData(userID, data)
+            if (span) span.end()
             this._logOperation('GET', userID, data)
         }
         return data
@@ -95,8 +97,8 @@ class TodoController {
     _setTodoData (userID, data) {
         var span = apm.startSpan('setting-items')
         cache.put(userID, data)
-        this._logOperation('SET', userID, data)
         if (span) span.end()
+        this._logOperation('SET', userID, data)
     }
 }
 

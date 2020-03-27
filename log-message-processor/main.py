@@ -16,7 +16,7 @@ client = Client({'SERVICE_NAME': 'python'})
 
 @elasticapm.capture_span()
 def log_message(message):
-    time_delay = random.randrange(0, 2000)
+    time_delay = random.randrange(500, 3000)
     time.sleep(time_delay / 1000)
     print('message received after waiting for {}ms: {}'.format(time_delay, message))
 
